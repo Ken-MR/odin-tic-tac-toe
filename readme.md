@@ -1,0 +1,1 @@
+This is a simple tic tac toe game demonstrating understanding of public vs private methods, function factories, modules, scope, and other related concepts.
