@@ -1,0 +1,8 @@
+.gameBoard {
+    display: grid !important;
+    grid-template: 50px 50px 50px / 50px 50px 50px;
+}
+
+.square {
+    border: 1px solid red;
+}
