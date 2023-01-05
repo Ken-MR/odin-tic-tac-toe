@@ -1,4 +1,4 @@
-.gameBoard {
+#spaces {
     display: grid !important;
     grid-template: 50px 50px 50px / 50px 50px 50px;
 }

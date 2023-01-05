@@ -15,16 +15,24 @@ const player = (name) => {
 const gameboard = (() => {
     const boardArray = [];
 
-    const getBoard = (space) => {
-        return boardArray[space];
-    };
+    for (i = 0; i < 9; i++) {
+        boardArray.push('');
+    }
+
+    let spaces = document.getElementById('spaces');
+
+    boardArray.forEach(() => {
+        const square = document.createElement('div');
+        square.className = 'square';
+        spaces.appendChild(square);
+    })
 
     const claimSpace = (space, player) => {
         boardArray[space] = player.choice;
         // update css to display the claimed space
     };
 
-    return {boardArray, getBoard, claimSpace};
+    return {boardArray, claimSpace};
 })();
 
 let name1 = prompt("Please enter player one's name.");
