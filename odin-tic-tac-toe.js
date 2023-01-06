@@ -1,10 +1,7 @@
-let playerNum = 0;
-let claim = 0;
-
-const player = (name) => {
+const player = (name, playerNum) => {
 
     let choice;
-    if (playerNum === 0) {
+    if (playerNum === 'one') {
         choice = 'X';
     }
     else {
@@ -28,45 +25,49 @@ const gameboard = (() => {
         const square = document.createElement('div');
         square.className = 'square';
         spaces.appendChild(square);
-    })
+    });
 
-    const claimSpace = (space, player) => {
-        boardArray[space] = player.choice;
-        // update css to display the claimed space
-    };
-
-    return {boardArray, claimSpace};
+    return {boardArray};
 })();
 
 const gamelogic = (() => {
 
-    const player1 = player(`${prompt("Please enter player one's name.")}`);
+    let claim = 0;
 
-    const player2 = player(`${prompt("Please enter player two's name.")}`);
+    let playerTurn = 'one';
+
+    let win = false;
+
+    const player1 = player(`${prompt("Please enter player one's name.")}`, 'one');
+
+    const player2 = player(`${prompt("Please enter player two's name.")}`, 'two');
 
     console.log(`Player one's name is ${player1.name}. They are ${player1.choice}.`);
 
     console.log(`Player two's name is ${player2.name}. They are ${player2.choice}.`);
 
-    const claimTest = () => {
-        // logic below tests the the space claim and boardArray can be checked outside of the gameboard object
-
-        gameboard.claimSpace(claim, player1);
-
-        console.log(`${player1.name} claims space ${claim + 1} with ${gameboard.boardArray[claim]}`);
-
-        claim++;
-
-        gameboard.claimSpace(claim, player2);
-
-        console.log(`${player2.name} claims space ${claim + 1} with ${gameboard.boardArray[claim]}`);
-
-        claim++;
-
-        gameboard.claimSpace(claim, player1);
-
-        console.log(`${player1.name} claims space ${claim + 1} with ${gameboard.boardArray[claim]}`);
-    };
+    const square = document.querySelectorAll('.square');
+    square.forEach(square => {
+        square.addEventListener('click', e => {
+            if (playerTurn === 'one' && !win && e.target.textContent === '') {
+                square.textContent = player1.choice;
+                gameboard.boardArray[e.target.id] = player1.choice;
+                playerTurn = 'two';
+            }
+            else if (playerTurn === 'two' && !win && e.target.textContent === '') {
+                square.textContent = player2.choice;
+                gameboard.boardArray[e.target.id] = player2.choice;
+                playerTurn = 'one';              
+            }
+            else if (e.target.textContent !== '') {
+                return console.log('Please pick an empty square');
+            }
+            else {
+                return;
+            };
+            // check win conditions
+        });
+    });
 
     const winStates = [
         [0,1,2],
@@ -79,5 +80,5 @@ const gamelogic = (() => {
         [2,4,6],
     ];
 
-    return {claimTest, winStates, player1, player2};
+    return {winStates, player1, player2, playerTurn, win};
 })();
