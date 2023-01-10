@@ -51,12 +51,12 @@ const gamelogic = (() => {
         square.addEventListener('click', e => {
             if (playerTurn === 'one' && !win && e.target.textContent === '') {
                 square.textContent = player1.choice;
-                gameboard.boardArray[e.target.id] = player1.choice;
+                gameboard.boardArray[[...square.parentNode.children].indexOf(square)] = player1.choice;
                 playerTurn = 'two';
             }
             else if (playerTurn === 'two' && !win && e.target.textContent === '') {
                 square.textContent = player2.choice;
-                gameboard.boardArray[e.target.id] = player2.choice;
+                gameboard.boardArray[[...square.parentNode.children].indexOf(square)] = player2.choice;
                 playerTurn = 'one';              
             }
             else if (e.target.textContent !== '') {
@@ -65,7 +65,14 @@ const gamelogic = (() => {
             else {
                 return;
             };
-            // check win conditions
+            claim++;
+            // check win conditions at 5 plays or more, minimum needed for victory of player 1
+            if (claim > 4) {
+                win = winCheck();
+            }
+            else if ((claim > 8) && (win === false)) {
+                console.log('Tie game! Play again?');
+            };
         });
     });
 
@@ -79,6 +86,29 @@ const gamelogic = (() => {
         [0,4,8],
         [2,4,6],
     ];
+
+    winCheck = () => {
+        for (let combos of winStates) {
+            if (
+                // this part is not working properly; the sections evaluate to '' and not value stored
+                gameboard.boardArray[combos[0]] 
+                == gameboard.boardArray[combos[1]] &&
+                gameboard.boardArray[combos[1]] 
+                == gameboard.boardArray[combos[2]] &&
+                gameboard.boardArray[combos[0]] != ''
+            ) {
+                let turn = claim % 2;
+                if (turn) {
+                    console.log(`Game over ${player1.name} wins!`);
+                }
+                else {
+                    console.log(`Game over ${player2.name} wins!`); 
+                }
+                return true;
+            }
+        }
+        return false;
+    };
 
     return {winStates, player1, player2, playerTurn, win};
 })();
