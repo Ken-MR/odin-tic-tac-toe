@@ -59,7 +59,7 @@ const gamelogic = (() => {
                 gameboard.boardArray[[...square.parentNode.children].indexOf(square)] = player2.choice;
                 playerTurn = 'one';              
             }
-            else if (e.target.textContent !== '') {
+            else if ((e.target.textContent !== '') && !win) {
                 return console.log('Please pick an empty square');
             }
             else {
@@ -67,11 +67,12 @@ const gamelogic = (() => {
             };
             claim++;
             // check win conditions at 5 plays or more, minimum needed for victory of player 1
-            if (claim > 4) {
-                win = winCheck();
-            }
-            else if ((claim > 8) && (win === false)) {
+            if ((claim > 8) && (win === false)) {
                 console.log('Tie game! Play again?');
+                win = true;
+            }
+            else if (claim > 4) {
+                win = winCheck();
             };
         });
     });
