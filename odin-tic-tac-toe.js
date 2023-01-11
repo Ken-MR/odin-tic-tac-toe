@@ -67,7 +67,8 @@ const gamelogic = (() => {
             claim++;
             // check win conditions at 5 plays or more, minimum needed for victory of player 1
             if ((claim > 8) && (win === false)) {
-                console.log('Tie game! Play again?');
+                const results = document.querySelector('#results');
+                results.textContent = `Tie game! Play again?`;
                 win = true;
             }
             else if (claim > 4) {
@@ -98,11 +99,12 @@ const gamelogic = (() => {
                 gameboard.boardArray[combos[0]] != ''
             ) {
                 let turn = claim % 2;
+                const results = document.querySelector('#results');
                 if (turn) {
-                    console.log(`Game over ${player1.name} wins!`);
+                    results.textContent = `Game over, ${player1.name} wins!`;
                 }
                 else {
-                    console.log(`Game over ${player2.name} wins!`); 
+                    results.textContent = `Game over, ${player2.name} wins!`;
                 }
                 return true;
             }
