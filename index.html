@@ -9,7 +9,24 @@
 </head>
 <body>
     <div id="game">
-        <div id="spaces">
+        <form id="player-entry" onsubmit="">
+            <ul>
+                <li>
+                  <label for="player1">Name:</label>
+                  <input type="text" id="player1" name="player1" placeholder='Player 1 Name' required/>
+                </li>
+                <li>
+                    <label for="player2">Name:</label>
+                    <input type="text" id="player2" name="player2" placeholder='Player 2 Name' required/>
+                </li>
+                <li>
+                    <button type="submit">Play</button>
+                </li>
+              </ul>
+        </form>
+        <div id="game-wrapper">
+            <div id="spaces">
+            </div>
         </div>
     </div>
     <script src="odin-tic-tac-toe.js"></script>
