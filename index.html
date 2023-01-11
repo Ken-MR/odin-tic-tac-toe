@@ -9,15 +9,15 @@
 </head>
 <body>
     <div id="game">
-        <form id="player-entry" onsubmit="">
+        <form id="player-entry" onsubmit="event.preventDefault() & gamelogic.playerGen(player1.value, player2.value)">
             <ul>
                 <li>
                   <label for="player1">Name:</label>
-                  <input type="text" id="player1" name="player1" placeholder='Player 1 Name' required/>
+                  <input type="text" id="player1" name="player1" placeholder='Player 1 Name' min="2" required/>
                 </li>
                 <li>
                     <label for="player2">Name:</label>
-                    <input type="text" id="player2" name="player2" placeholder='Player 2 Name' required/>
+                    <input type="text" id="player2" name="player2" placeholder='Player 2 Name' min="2" required/>
                 </li>
                 <li>
                     <button type="submit">Play</button>

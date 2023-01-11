@@ -7,7 +7,6 @@ const player = (name, playerNum) => {
     else {
         choice = 'O';
     }
-    playerNum++;
     return {name, choice};
 };
 
@@ -36,15 +35,15 @@ const gamelogic = (() => {
 
     let playerTurn = 'one';
 
-    let win = false;
+    let win = true;
 
-    const player1 = player(`${prompt("Please enter player one's name.")}`, 'one');
+    let player1;
 
-    const player2 = player(`${prompt("Please enter player two's name.")}`, 'two');
+    let player2;
 
-    console.log(`Player one's name is ${player1.name}. They are ${player1.choice}.`);
+    //console.log(`Player one's name is ${player1.name}. They are ${player1.choice}.`);
 
-    console.log(`Player two's name is ${player2.name}. They are ${player2.choice}.`);
+    //console.log(`Player two's name is ${player2.name}. They are ${player2.choice}.`);
 
     const square = document.querySelectorAll('.square');
     square.forEach(square => {
@@ -111,5 +110,11 @@ const gamelogic = (() => {
         return false;
     };
 
-    return {winStates, player1, player2, playerTurn, win};
+    function playerGen (first, second) {
+        player1 = player(first, 'one');
+        player2 = player(second, 'two');
+        win = false;
+    };
+
+    return {winStates, playerTurn, win, player1, player2, playerGen};
 })();
