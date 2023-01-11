@@ -1,8 +1,21 @@
+#game {
+    display: grid !important;
+    grid-template-rows: 350px 350px 350px;
+    align-items: center;
+    justify-content: center;
+}
+
 #spaces {
     display: grid !important;
-    grid-template: 50px 50px 50px / 50px 50px 50px;
+    grid-template: 100px 100px 100px / 100px 100px 100px;
+    grid-row: 2 / 2;
+    border: 3px solid red;
 }
 
 .square {
-    border: 1px solid red;
+    display: flex;
+    border: 5px solid red;
+    align-items: center;
+    justify-content: center;
+    font-size: 100px;
 }
