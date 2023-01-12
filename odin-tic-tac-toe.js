@@ -26,7 +26,15 @@ const gameboard = (() => {
         spaces.appendChild(square);
     });
 
-    return {boardArray};
+    playAgain = () => {
+        document.getElementById("message").style.display = "block";
+    };
+
+    resetGame = () => {
+        document.getElementById("message").style.display = "none";
+    };
+
+    return {boardArray, playAgain, resetGame};
 })();
 
 const gamelogic = (() => {
@@ -40,6 +48,8 @@ const gamelogic = (() => {
     let player1;
 
     let player2;
+
+    let popup = document.getElementById("results");
 
     //console.log(`Player one's name is ${player1.name}. They are ${player1.choice}.`);
 
@@ -68,7 +78,9 @@ const gamelogic = (() => {
             // check win conditions at 5 plays or more, minimum needed for victory of player 1
             if ((claim > 8) && (win === false)) {
                 const results = document.querySelector('#results');
-                results.textContent = `Tie game! Play again?`;
+                results.textContent = `Tie game!`;
+                popup.classList.toggle("show");
+                popup.textContent = 'Play again?';
                 win = true;
             }
             else if (claim > 4) {
@@ -102,10 +114,15 @@ const gamelogic = (() => {
                 const results = document.querySelector('#results');
                 if (turn) {
                     results.textContent = `Game over, ${player1.name} wins!`;
+                    popup.classList.toggle("show");
+                    popup.textContent = 'Play again?';
                 }
                 else {
                     results.textContent = `Game over, ${player2.name} wins!`;
+                    popup.classList.toggle("show");
+                    popup.textContent = 'Play again?';
                 }
+                gameboard.playAgain();
                 return true;
             }
         }
