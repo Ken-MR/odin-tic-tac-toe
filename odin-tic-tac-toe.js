@@ -1,5 +1,4 @@
 const player = (name, playerNum) => {
-
     let choice;
     if (playerNum === 'one') {
         choice = 'X';
@@ -12,7 +11,7 @@ const player = (name, playerNum) => {
 
 const gameboard = (() => {
 
-    const boardArray = [];
+    let boardArray = [];
 
     for (i = 0; i < 9; i++) {
         boardArray.push('');
@@ -31,6 +30,18 @@ const gameboard = (() => {
     };
 
     resetGame = () => {
+        const square = document.querySelectorAll('.square');
+        square.forEach(square => {
+            square.innerHTML = '';
+        });
+        boardArray = [];
+        for (i = 0; i < 9; i++) {
+            boardArray.push('');
+        }
+        gamelogic.playerTurn = 'one';
+        gamelogic.claim = 0;
+        popup = document.getElementById("results");
+        popup.textContent = '';
         document.getElementById("message").style.display = "none";
     };
 
@@ -51,25 +62,26 @@ const gamelogic = (() => {
 
     let popup = document.getElementById("results");
 
-    //console.log(`Player one's name is ${player1.name}. They are ${player1.choice}.`);
-
-    //console.log(`Player two's name is ${player2.name}. They are ${player2.choice}.`);
+    let results = document.querySelector('#results');
 
     const square = document.querySelectorAll('.square');
     square.forEach(square => {
         square.addEventListener('click', e => {
+            
             if (playerTurn === 'one' && !win && e.target.textContent === '') {
                 square.textContent = player1.choice;
                 gameboard.boardArray[[...square.parentNode.children].indexOf(square)] = player1.choice;
                 playerTurn = 'two';
+                results.textContent = '';
             }
             else if (playerTurn === 'two' && !win && e.target.textContent === '') {
                 square.textContent = player2.choice;
                 gameboard.boardArray[[...square.parentNode.children].indexOf(square)] = player2.choice;
                 playerTurn = 'one';              
+                results.textContent = '';
             }
             else if ((e.target.textContent !== '') && !win) {
-                return console.log('Please pick an empty square');
+                return results.textContent = 'Please pick an empty square!';
             }
             else {
                 return;
@@ -77,7 +89,6 @@ const gamelogic = (() => {
             claim++;
             // check win conditions at 5 plays or more, minimum needed for victory of player 1
             if ((claim > 8) && (win === false)) {
-                const results = document.querySelector('#results');
                 results.textContent = `Tie game!`;
                 popup.classList.toggle("show");
                 popup.textContent = 'Play again?';
