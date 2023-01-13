@@ -63,9 +63,7 @@ const gamelogic = (() => {
 
     let player2;
 
-    let popup = document.getElementById("results");
-
-    let results = document.querySelector('#results');
+    let results = document.getElementById("results");
 
     const square = document.querySelectorAll('.square');
     square.forEach(square => {
@@ -91,14 +89,13 @@ const gamelogic = (() => {
             };
             claim++;
             // check win conditions at 5 plays or more, minimum needed for victory of player 1
-            if ((claim > 8) && (win === false)) {
-                results.textContent = `Tie game!`;
-                popup.classList.toggle("show");
-                popup.textContent = 'Play again?';
-                win = true;
-            }
-            else if (claim > 4) {
+            if ((claim > 4) && (win === false)) {
                 win = winCheck();
+            }
+            if (claim > 8) {
+                results.textContent = `Tie game!`;
+                win = true;
+                gameboard.playAgain();
             };
         });
     });
@@ -125,16 +122,11 @@ const gamelogic = (() => {
                 gameboard.boardArray[combos[0]] != ''
             ) {
                 let turn = claim % 2;
-                const results = document.querySelector('#results');
                 if (turn) {
                     results.textContent = `Game over, ${player1.name} wins!`;
-                    popup.classList.toggle("show");
-                    popup.textContent = 'Play again?';
                 }
                 else {
                     results.textContent = `Game over, ${player2.name} wins!`;
-                    popup.classList.toggle("show");
-                    popup.textContent = 'Play again?';
                 }
                 gameboard.playAgain();
                 return true;
