@@ -19,6 +19,8 @@ const gameboard = (() => {
 
     let spaces = document.getElementById('spaces');
 
+    let play = document.getElementById('player-entry');
+
     boardArray.forEach(() => {
         const square = document.createElement('div');
         square.className = 'square';
@@ -38,6 +40,7 @@ const gameboard = (() => {
         for (i = 0; i < 9; i++) {
             boardArray.push('');
         }
+        play.reset();
         gamelogic.playerTurn = 'one';
         gamelogic.claim = 0;
         popup = document.getElementById("results");
